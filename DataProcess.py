@@ -54,53 +54,6 @@ def loading2(i,data_path): #下载自己的数据集2
     return data_eeg, label_eeg, data_hbr, data_hbo,label_hbr
 
 
-def loading3(i, data_path):
-    print('load Raw data')
-
-    # EEG
-    data_path1 = data_path + 'X_eeg' + str(i) + '.npy'
-    label_path1 = data_path + 'Y_lable' + str(i) + '.npy'
-    data_eeg = np.load(data_path1)  # (20,4201,31)
-    label_eeg = np.load(label_path1)  # (20,2)
-    # HbR 、HbO
-    data_path2 = data_path + 'X_hbr' + str(i) + '.npy'
-    data_path3 = data_path + 'X_hbo' + str(i) + '.npy'
-    data_hbr = np.load(data_path2)  # (20,201,32)
-    data_hbo = np.load(data_path3)  # (20,201,32)
-    label_hbr = np.load(label_path1)  # (20,2)
-    #
-    # data_eeg = data_eeg[:, 200:2200, 8:20]
-    # data_hbr = data_hbr[:, 100:200, 8:20]
-    # data_hbo = data_hbo[:, 100:200, 8:20]
-
-    return data_eeg, label_eeg, data_hbr, data_hbo, label_hbr
-
-# def sliding_window(data, lable, fs, windows_long = 3):
-#
-#     X_data ,y_data = [], []
-#     for i in range(data.shape[0]):
-#         data_t = data[i].T
-#         lable_temp = lable[i]
-#         X, y = [], []
-#         for start in range(8):
-#             in_ = start *fs
-#             end = in_ + windows_long *fs
-#             # print(data_t.shape)
-#             train_seq = data_t[:,in_:end]
-#             train_seq = train_seq.T
-#             X.append(train_seq)
-#             y.append(lable_temp)
-#         X_data.append(X)
-#         y_data.append(y)
-#     X_data = np.array(X_data)
-#     y_data = np.array(y_data)
-#
-#     X_data = X_data.reshape(data.shape[0] *8, windows_long *fs, data.shape[-1])
-#     y_data = y_data.reshape(data.shape[0] *8, 1)
-#
-#     X_data = torch.from_numpy(X_data)
-#     y_data = torch.from_numpy(y_data)
-#     return X_data, y_data
 def sliding_window(data, label, fs, windows_long=3):
     X_data, y_data = [], []
     for i in range(data.shape[0]):
